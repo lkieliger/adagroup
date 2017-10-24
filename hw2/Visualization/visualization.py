@@ -5,11 +5,11 @@ def pretty_bar(vals, xlabels, title, xtitle, ytitle, width=0.6, figwidth=5, rot=
     rcParams['figure.figsize'] = figwidth, 5
     rcParams['xtick.labelsize'] = 16
     rcParams['ytick.labelsize'] = 16
-    plt.bar(range(len(xlabels)), vals, tick_label=xlabels, width=width, align='center')
+    plt.bar(range(len(xlabels)), vals, tick_label=xlabels, width=width, align='center', zorder=3)
     plt.xticks(rotation=45, ha='right')
     plt.xlabel(xtitle)
     plt.ylabel(ytitle, fontsize=16)
-    plt.grid(axis='x')
+    plt.grid(axis='y', zorder=0)
     plt.title(title, 
               horizontalalignment='center',
               fontsize=20, 
