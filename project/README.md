@@ -2,11 +2,17 @@
 
 ## Abstract
 
-Other people's opinions tend to make us more **open-minded and critical thinking** when they are more personal and detailed. It is easier for us to **relate to and question** specific stories, which describe someone's opinion formation, rather than general statements. In this project, we aim to illuminate this observation from different perspectives analysing Amazon product reviews dataset using **Natural Language Processing** (NLP) techniques. We assume, first, that **longer** reviews tend to be **more informative**, thus more detailed and personal, and second, that users **find helpful** those reviews that helped them make **informed undisturbed decisions** and **left them satisfied** with their choices. This angle of view on opinion formation and decision making might be helpful towards reframing online shopping experience from quite a **distracting and exhaustive** one to more **thought-out and unbiased** by (at least) increasing people's awareness about the **value of focused life**.
+<Other people's opinions tend to make us more **open-minded and critical thinking** when they are more personal and detailed. It is easier for us to **relate to and question** specific stories, which describe someone's opinion formation, rather than general statements. In this project, we aim to illuminate this observation from different perspectives analysing Amazon product reviews dataset using **Natural Language Processing** (NLP) techniques. We assume, first, that **longer** reviews tend to be **more informative**, thus more detailed and personal, and second, that users **find helpful** those reviews that helped them make **informed undisturbed decisions** and **left them satisfied** with their choices. This angle of view on opinion formation and decision making might be helpful towards reframing online shopping experience from quite a **distracting and exhaustive** one to more **thought-out and unbiased** by (at least) increasing people's awareness about the **value of focused life**.
+
 
 
 ## Research questions
 
+1. What are the recurring opinions on a given product ? Can they be used to characterize it and offer to the reader a quick overview ?
+2. Do certain brands tend to be associated with specific qualifiers ?
+3. Do that perception vary over time ? 
+
+<!--
 1. What are the **positive/critical reviews percentages** for **short vs long** reviews (using ratings)?
 2. How do **bags-of-words** differ for **short vs long** Amazon reviews?
 3. How do **bags-of-words/n-grams** differ for **long** Amazon reviews (long reviews allow n-gram analysis)?
@@ -19,6 +25,7 @@ Other people's opinions tend to make us more **open-minded and critical thinking
 10. How does the **tendency** towards writing long reviews depend on **age/gender** (using reviewer IDs)?
 11. What **attitudes** might be reflected in writing **long detailed** reviews?
 12. How does the percentage of **long** reviews **evolve** throughout the timespan of the dataset?
+-->
 
 
 ## Dataset
