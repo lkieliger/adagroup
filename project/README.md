@@ -13,7 +13,6 @@ When shopping online, we often rely on the feedback provided by other internet u
 
 ## Additional research questions:
 1. Do certain brands tend to be associated with specific characteristics ?
-2. Do that perception vary over time ? 
 
 ## Datasets
 
