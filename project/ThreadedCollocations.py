@@ -21,7 +21,6 @@ def filterTags(w1, w2):
     """
     w1: First tagged word
     w2: Second tagged word
-
     Returns true if the bigram collocation is of type adjective-noun, adverb-past participle or verb-adverb
     """
     _, tag1 = nltk.pos_tag(nltk.word_tokenize(w1))[0]
@@ -35,8 +34,7 @@ def filterTags(w1, w2):
 def getCollocations(text):
     """
     text: The concatenation of all the review for a given product
-
-    Returns the collocations of words larger 
+    Returns the collocations of words larger
     """
     ignored_words = nltk.corpus.stopwords.words('english')
 
@@ -47,11 +45,10 @@ def getCollocations(text):
 
     # Ignore bigram that are infrequent
     finder.apply_freq_filter(3)
-
     # Retrieves the 10 most common bigrams
-    res = finder.nbest(bigram_measures.pmi, 10)
-
-    res = [(x, round(finder.score_ngram(bigram_measures.pmi, x[0], x[1]), 2)) for x in res if filterTags(x[0], x[1])]
+    bigram_res = finder.nbest(bigram_measures.pmi, 10)
+    res = [(x,round(finder.score_ngram(bigram_measures.raw_freq, x[0], x[1]),5)*200)
+                  for x in bigram_res if filterTags(x[0],x[1])]
 
     if (len(res) > 0):
         return res
