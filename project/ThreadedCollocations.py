@@ -31,18 +31,21 @@ def filterTags(w1, w2):
            (tag1.startswith('VB') and tag2 == "JJ")
 
 
-def getCollocations(tokens):
+def getCollocations(text):
     """
     text: The concatenation of all the review for a given product
     Returns the collocations of words larger
     """
+    ignored_words = nltk.corpus.stopwords.words('english')
 
+    tokens = nltk.word_tokenize(text)
     bigram_measures = nltk.collocations.BigramAssocMeasures()
 
     finder = nltk.BigramCollocationFinder.from_words(tokens)
 
     # Ignore bigram that are infrequent
     finder.apply_freq_filter(3)
+    # Retrieves the 10 most common bigrams
     bigram_res = finder.nbest(bigram_measures.pmi, None)
     res = [(x,round(finder.score_ngram(bigram_measures.raw_freq, x[0], x[1]),5)*200)
                   for x in bigram_res if filterTags(x[0],x[1]) and not is_compound_word(x[0]+"_"+x[1])]
@@ -78,14 +81,18 @@ def isAdjective(token):
 
 pattern = re.compile('[\\\*\.]+')
 
-def getAdjectives(tokens):
+def getAdjectives(text):
     """
     text: The concatenation of all the reviews for a given product
 
     Returns a list of adjectives and their frequency
     """
 
-    print("AdjExt "+tokens[0])
+    print("AdjExt "+text[:5])
+
+    #text = re.sub(pattern, " ", text)
+
+    tokens = nltk.word_tokenize(text)
     num_tokens = len(tokens)
 
     adjectives = []
@@ -119,20 +126,20 @@ if __name__ == "__main__":
 
     N_THREADS = 8
 
-    def parallelized_apply(thread_pool, func, grouped_reviews: pd.Series):
-        return pd.Series(thread_pool.map(func, grouped_reviews.tolist()))
+    def parallelized_apply(func, grouped_reviews: pd.Series):
+
+        with Pool(N_THREADS) as thread_pool:
+            responses = thread_pool.map(func, grouped_reviews.tolist())
+
+        return pd.Series(responses)
 
 
-    with Pool(N_THREADS) as thread_pool:
+    adjs = parallelized_apply(getAdjectives, df_product["reviewText"])
+    colls = parallelized_apply(getCollocations, df_product["reviewText"])
 
-        tokenized_text = df_product["reviewText"].apply(nltk.word_tokenize)
+    df_product["rawAdjectives"] = adjs
+    df_product["reviewText"] = colls
 
-        adjs = parallelized_apply(thread_pool, getAdjectives, tokenized_text)
-        colls = parallelized_apply(thread_pool, getCollocations, tokenized_text)
+    df_product.to_pickle("elec_collocations_adjectives.pickle")
 
-        df_product["rawAdjectives"] = adjs
-        df_product["reviewText"] = colls
-
-        df_product.to_pickle("elec_collocations_adjectives.pickle")
-
-        print(df_product)
+    print(df_product)
