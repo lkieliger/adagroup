@@ -1,6 +1,7 @@
 # Amazon Reviews Analysis for Focused Online Shopping
 
 # [Project Notebook](https://github.com/lkieliger/adagroup/blob/master/project/Natural_Language_Project.ipynb)
+# [Project report](https://github.com/lkieliger/adagroup/blob/master/project/report.pdf)
 
 ## Abstract
 
