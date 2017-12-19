@@ -12,10 +12,24 @@ from IPython.display import HTML, display
 from multiprocessing import Pool
 from timeit import default_timer as timer
 from collections import Counter
+import datetime
+from collections import OrderedDict
+import itertools
 import re, string
 
 rcParams['figure.figsize'] = 15, 10
 np.random.seed(42)
+
+black_list_t1 = ['few', 'am', 'is', 'was', "'m", 'different', 'being', 'other', 'same', 'last', 'upper']
+black_list_t2 = ['reviews', 'engineer', 'days', 'months', 'years']
+
+def filterBigram(w1, w2):
+
+    return  filterTags(w1, w2) and notInBlackList(w1, w2) and not is_compound_word(w1+"_"+w2)
+
+
+def notInBlackList(w1, w2):
+    return (w1 not in black_list_t1) and (w2 not in black_list_t2)
 
 def filterTags(w1, w2):
     """
@@ -36,22 +50,41 @@ def getCollocations(text):
     text: The concatenation of all the review for a given product
     Returns the collocations of words larger
     """
-    ignored_words = nltk.corpus.stopwords.words('english')
+    print(text[:3])
 
     tokens = nltk.word_tokenize(text)
     bigram_measures = nltk.collocations.BigramAssocMeasures()
-
     finder = nltk.BigramCollocationFinder.from_words(tokens)
 
     # Ignore bigram that are infrequent
     finder.apply_freq_filter(3)
-    # Retrieves the 10 most common bigrams
-    bigram_res = finder.nbest(bigram_measures.pmi, None)
-    res = [(x,round(finder.score_ngram(bigram_measures.raw_freq, x[0], x[1]),5)*200)
-                  for x in bigram_res if filterTags(x[0],x[1]) and not is_compound_word(x[0]+"_"+x[1])]
+
+    bigram_res_likelihood = finder.nbest(bigram_measures.likelihood_ratio, None)
+    bigram_res_pmi = finder.nbest(bigram_measures.pmi, None)
+
+    res_likelihood = [(x, round(finder.score_ngram(bigram_measures.raw_freq, x[0], x[1]), 5) * 200)
+                      for x in bigram_res_likelihood if filterBigram(x[0], x[1])]
+
+    res_pmi = [(x, round(finder.score_ngram(bigram_measures.raw_freq, x[0], x[1]), 5) * 200)
+                      for x in bigram_res_pmi if filterBigram(x[0], x[1])]
+
+    # Convert back to list
+    res = list(
+        # Eliminate duplicates
+        OrderedDict.fromkeys(
+            # Flatten list of tuples
+            list(
+                itertools.chain.from_iterable(
+                    # Assemble pmi and likelihood scores
+                    zip(res_pmi, res_likelihood)
+                )
+            )
+        )
+    )
+
 
     if (len(res) > 0):
-        return res
+        return res[:10]
     else:
         return np.nan
 
@@ -116,7 +149,7 @@ def getAdjectives(text):
                 else:
                     adjectives.append(token)
 
-    return Counter(adjectives).most_common(20)
+    return Counter(adjectives).most_common(15)
 
 if __name__ == "__main__":
     df_elec = pd.read_pickle('data/electronics_serialized.pickle')
@@ -134,12 +167,13 @@ if __name__ == "__main__":
         return pd.Series(responses)
 
 
+    print(datetime.datetime.now())
     adjs = parallelized_apply(getAdjectives, df_product["reviewText"])
     colls = parallelized_apply(getCollocations, df_product["reviewText"])
 
     df_product["rawAdjectives"] = adjs
     df_product["reviewText"] = colls
 
-    df_product.to_pickle("elec_collocations_adjectives.pickle")
+    df_product.to_pickle("elec_collocations_adjectives_hybrid.pickle")
 
     print(df_product)
