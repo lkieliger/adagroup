@@ -31,3 +31,9 @@ When shopping online, we often rely on the feedback provided by other internet u
 * Natural Language Tool Kit
 * Numpy
 * Pandas
+
+
+## Work distribution
+* **Leandro Kieliger**: Updated research questions for milestone 2, studied NLP techniques and implemented bigram collocations extraction with PMI and likelihood ratios. Implemented first approach for sentiment analysis with SentiWordNet. Made structure and first draft of the notebook, heavy rewriting on report.
+* **Quentin Bacuet**: Performed exploratory data analysis. Improved sentiment analysis with multilayer perceptron and collocation counting. Worked on collocation aggregation per brand, scoring mechanism for products and brands. Implemented notebook visualisations. Made structure and first draft of the report.
+* **Olesya Altunina**: wrote initial research questions for milestone 1..
