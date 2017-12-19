@@ -5,7 +5,7 @@
 
 ## Abstract
 
-When shopping online, we often rely on the feedback provided by other internet users to decide wheter the merchandise we are considering buying is worth the money. Most electronic commerce platform allow their users to review or rate their purchases, usually with a system of stars or points. In this project, we aim to complement those means of providing feedback by automatically analysing and aggregating the reviews of multiple users. We experiment with opinion mining through the use of natural language processing techniques. The goal is to extract from the reviews common opinion on product characteristics such as quality or performance. This way, subsequent buyers will be able to grasp at a glance the strong and weak points of what want to acquire.
+When shopping online, we often rely on the feedback provided by other internet users to decide wheter the merchandise we are considering buying is worth the money. Most electronic commerce platform allow their users to review or rate their purchases, usually with a system of stars or points. In this project, we aim to complement those means of providing feedback by automatically analysing and aggregating the reviews of multiple users. We experiment with opinion mining through the use of natural language processing techniques. The goal is to extract from the reviews common opinion on product characteristics such as quality or performance. This way, subsequent buyers will be able to grasp at a glance the strong and weak points of what they want to acquire.
 
 ## Research questions
 
@@ -37,3 +37,5 @@ When shopping online, we often rely on the feedback provided by other internet u
 * **Leandro Kieliger**: Updated research questions for milestone 2, studied NLP techniques and implemented bigram collocations extraction with PMI and likelihood ratios. Implemented first approach for sentiment analysis with SentiWordNet. Made structure and first draft of the notebook, heavy rewriting on report.
 * **Quentin Bacuet**: Performed exploratory data analysis. Improved sentiment analysis with multilayer perceptron and collocation counting. Worked on collocation aggregation per brand, scoring mechanism for products and brands. Implemented notebook visualisations. Made structure and first draft of the report.
 * **Olesya Altunina**: wrote initial research questions for milestone 1..
+
+Both **Leandro Kieliger** and **Quentin Bacuet** will be working on the presentation.
