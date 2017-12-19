@@ -24,7 +24,6 @@ black_list_t1 = ['few', 'am', 'is', 'was', "'m", 'different', 'being', 'other', 
 black_list_t2 = ['reviews', 'engineer', 'days', 'months', 'years']
 
 def filterBigram(w1, w2):
-
     return  filterTags(w1, w2) and notInBlackList(w1, w2) and not is_compound_word(w1+"_"+w2)
 
 
@@ -92,6 +91,11 @@ def getCollocations(text):
 compound_dictionnary = pd.read_pickle("data/filtered_compound_words.pickle.gz")
 
 def is_compound_word(word):
+    """
+    
+    :param word: The word to be searched in the dictionnary
+    :return: True if the word was found in the dictionnary, false otherwise
+    """
     i = compound_dictionnary.searchsorted(word)
 
     if i == len(compound_dictionnary):
